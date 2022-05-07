@@ -36,17 +36,18 @@ export default {
   },
   methods: {
     onSubmit (formName) {
-      const obj = this
       this.$refs[formName].validate((valid) => {
         if (valid) {
           const formValue = this.$refs.form.model
           console.log(formValue, 'this.isvalue')
-          obj.$axios({
-            url: '/user/list',
-            methods: 'get'
-          }).then(res => {
-            console.log(res, 'this,is.res')
-          })
+          console.log(this.$api, 'this.is.api')
+          this.$api.loginAPI.getUser()
+          // this.$axios({
+          //   url: '/user/list',
+          //   methods: 'get'
+          // }).then(res => {
+          //   console.log(res, 'this,is.res')
+          // })
         }
       })
     },

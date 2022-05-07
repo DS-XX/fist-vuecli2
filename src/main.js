@@ -6,11 +6,13 @@ import axios from 'axios'
 // import ElementUI from 'element-ui'
 import './element'
 import router from './router'
+import base from './api/base.js'
 
 Vue.config.productionTip = false
 // axios.defaults.baseURL = 'http//127.0.0.1:8081'
 // axios.defaults.headers['Content-Type'] = 'application/x-www-form-urlencoded'
 Vue.prototype.$axios = axios
+Vue.prototype.$api = base
 
 /* eslint-disable no-new */
 new Vue({
