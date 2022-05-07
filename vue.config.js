@@ -15,14 +15,14 @@ module.exports = {
     headers: {
       "Access-Control-Allow-Origin": "*",
     },
-    // proxy: {
-    //   "/glxytech-sso-resource": {
-    //     // target: "https://mtxtest.weioutech.com:4438/",
-    //     target: "https://test.glxytech.com:32443/",
-    //     ws: true,
-    //     secure: false,
-    //     changeOrigin: true,
-    //   },
-    // },
+    proxy: {
+      "/localhost": {
+        // target: "https://mtxtest.weioutech.com:4438/",
+        target: "https://test.glxytech.com:32443/",
+        ws: true,
+        secure: false,
+        changeOrigin: true,
+      },
+    },
   },
 };
