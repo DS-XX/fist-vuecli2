@@ -12,6 +12,43 @@
       <el-button @click="resetForm('form')">清空</el-button>
     </el-form-item>
   </el-form>
+  <div ref="divRef" style="display:flex;direction:row">
+  <div
+  v-for="(tag,index) in tags"
+  :key="tag.name">
+    <el-tag
+  :key="tag.name"
+  v-if="index!==showIndex"
+  closable
+  :type="tag.type"
+  @dblclick.native.capture="e=>clickdb(index)">
+  {{tag.name}}
+</el-tag>
+<el-input
+v-else
+ ref="saveTagInput"
+:style="{width:inputWidth || 0}"
+@blur="()=>blurclear(index)"
+v-model="inputValue"
+>
+</el-input>
+  </div>
+  <el-input
+  class="input-new-tag"
+  v-if="inputVisible"
+  v-model="inputValue"
+  ref="saveTagInput"
+  size="small"
+  @keyup.enter.native="handleInputConfirm"
+  @blur="handleInputConfirm"
+>
+</el-input>
+<el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+
+  </div>
+  <el-input :style="{width:inputWidth}"
+></el-input>
+  {{inputWidth}}
   </div>
 </template>
 <script>
@@ -19,6 +56,17 @@ export default {
   name: 'basic',
   data () {
     return {
+      tags: [
+        { name: '标签一', type: '' },
+        { name: '标签二', type: 'success' },
+        { name: '标签三', type: 'info' },
+        { name: '标签四', type: 'warning' },
+        { name: '标签五', type: 'danger' }
+      ],
+      showIndex: '',
+      inputWidth: '',
+      inputValue: '',
+      inputVisible: false,
       form: {
         loginName: '',
         password: ''
@@ -53,13 +101,60 @@ export default {
     },
     resetForm (formName) {
       this.$refs[formName].resetFields()
+    },
+    clickdb (index) {
+      const width = this.$refs.divRef.children[index].offsetWidth
+      this.inputWidth = width
+      this.inputValue = this.tags[index].name
+      console.log(this.inputWidth, 'inputstyle')
+      console.log(index, '111')
+      this.showIndex = index
+      this.$nextTick(() => {
+        console.log(this.$refs.saveTagInput, 11111)
+        this.$refs.saveTagInput[0].$refs.input.focus()
+      })
+    },
+    blurclear (index) {
+      if (!this.checkRepeat(index, this.inputValue)) {
+        this.$message.error('重复名')
+        return
+      }
+      this.tags[index].name = this.inputValue
+      this.showIndex = ''
+      this.inputValue = ''
+    },
+    handleClose (tag) {
+      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1)
+    },
+
+    showInput () {
+      this.inputVisible = true
+      this.$nextTick(_ => {
+        this.$refs.saveTagInput.$refs.input.focus()
+      })
+    },
+    handleInputConfirm () {
+      let inputValue = this.inputValue
+      if (inputValue) {
+        this.tags.push({name: inputValue})
+      }
+      this.inputVisible = false
+      this.inputValue = ''
+    },
+    checkRepeat (index, name) {
+      for (let i = 0; i < this.tags.length; i++) {
+        if (i !== index && this.tags[i].name === name) {
+          return false
+        }
+      }
+      return true
     }
   }
 }
 </script>
 <style scoped lang="less">
 .containAll{
-  display: flex;
+  display: flex ;
   flex-direction: column;
   align-items: center;
 }
