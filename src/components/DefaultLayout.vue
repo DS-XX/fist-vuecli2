@@ -15,7 +15,7 @@
 import SideMenu from './SideMenu'
 import routerData from '../const/routerData'
 export default{
-  name: 'default-layout',
+  name: 'DefaultLayout',
   components: {
     SideMenu
   },

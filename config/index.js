@@ -10,8 +10,16 @@ module.exports = {
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
-
+    proxyTable: {
+      '/localhost': {
+        // 测试环境
+        target: 'https://mtxtest.weioutech.com:4438',  // 接口域名
+        changeOrigin: true,  //是否跨域
+        pathRewrite: {
+            '^/apis': ''   //需要rewrite重写的,
+        }
+      }
+    },
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
     port: 9999, // can be overwritten by process.env.PORT, if port is in use, a free one will be determined

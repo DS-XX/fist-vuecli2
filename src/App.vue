@@ -2,7 +2,7 @@
   <div id="app">
     <DefaultLayout>
       <template v-slot:main-content>
-          <router-view/>
+        <router-view/>
       </template>
     </DefaultLayout>
   </div>

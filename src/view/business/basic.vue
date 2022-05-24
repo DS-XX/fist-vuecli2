@@ -1,59 +1,73 @@
 <template>
   <div class="containAll">
-  <el-form :model="form" ref="form" :rules="rules" label-width="80px" :inline="false" size="normal" class="formWidth">
-    <el-form-item label="登录账号">
-      <el-input v-model="form.loginName"></el-input>
-    </el-form-item>
-    <el-form-item label="登录密码">
-      <el-input v-model="form.password"></el-input>
-    </el-form-item>
-    <el-form-item>
-      <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
-      <el-button @click="resetForm('form')">清空</el-button>
-    </el-form-item>
-  </el-form>
-  <div ref="divRef" style="display:flex;direction:row">
-  <div
-  v-for="(tag,index) in tags"
-  :key="tag.name">
-    <el-tag
-  :key="tag.name"
-  v-if="index!==showIndex"
-  closable
-  :type="tag.type"
-  @dblclick.native.capture="e=>clickdb(index)">
-  {{tag.name}}
-</el-tag>
-<el-input
-v-else
- ref="saveTagInput"
-:style="{width:inputWidth || 0}"
-@blur="()=>blurclear(index)"
-v-model="inputValue"
->
-</el-input>
-  </div>
-  <el-input
-  class="input-new-tag"
-  v-if="inputVisible"
-  v-model="inputValue"
-  ref="saveTagInput"
-  size="small"
-  @keyup.enter.native="handleInputConfirm"
-  @blur="handleInputConfirm"
->
-</el-input>
-<el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+    <el-form
+      ref="form"
+      :model="form"
+      :rules="rules"
+      :inline="false"
+      label-width="80px"
+      size="normal"
+      class="formWidth">
+      <el-form-item label="登录账号">
+        <el-input v-model="form.loginName"/>
+      </el-form-item>
+      <el-form-item label="登录密码">
+        <el-input v-model="form.password"/>
+      </el-form-item>
+      <el-form-item>
+        <el-button
+          type="primary"
+          @click="onSubmit('form')">立即创建</el-button>
+        <el-button @click="resetForm('form')">清空</el-button>
+      </el-form-item>
+    </el-form>
+    <div
+      ref="divRef"
+      style="display:flex;direction:row">
+      <div
+        v-for="(tag,index) in tags"
+        :key="tag.name">
+        <el-tag
+          v-if="index!==showIndex"
+          :key="tag.name"
+          :type="tag.type"
+          closable
+          @dblclick.native.capture="e=>clickdb(index)">
+          {{ tag.name }}
+        </el-tag>
+        <el-input
+          v-else
+          ref="saveTagInput"
+          :style="{width:inputWidth || 0}"
+          v-model="inputValue"
+          @blur="()=>blurclear(index)"
+        />
+      </div>
+      <el-input
+        v-if="inputVisible"
+        ref="saveTagInput"
+        v-model="inputValue"
+        class="input-new-tag"
+        size="small"
+        @keyup.enter.native="handleInputConfirm"
+        @blur="handleInputConfirm"
+      />
+      <el-button
+        v-else
+        class="button-new-tag"
+        size="small"
+        @click="showInput">+ New Tag</el-button>
 
-  </div>
-  <el-input :style="{width:inputWidth}"
-></el-input>
-  {{inputWidth}}
+    </div>
+    <el-input
+      :style="{width:inputWidth}"
+    />
+    {{ inputWidth }}
   </div>
 </template>
 <script>
 export default {
-  name: 'basic',
+  name: 'Basic',
   data () {
     return {
       tags: [
